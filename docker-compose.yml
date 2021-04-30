@@ -1,0 +1,44 @@
+version: '3'
+services: 
+  rubay-web-app:
+    container_name: rubay-web-app
+    image: rubay-web-app-2021:latest
+    build:
+      context: .
+      dockerfile: Rubay.Web.App/Dockerfile
+    ports: 
+      - "80:80"
+    links:
+      - rubay-cart-api
+      - rubay-item-api
+    environment: 
+      - ItemApiUrl=http:\\rubay-item-api
+      - CartApiUrl=http:\\rubay-cart-api
+  rubay-cart-api:
+    container_name: rubay-cart-api
+    image: rubay-cart-api-2021:latest
+    build:
+      context: .
+      dockerfile: Rubay.Cart.Api/Dockerfile
+    ports: 
+      - "5656:80"
+    links: 
+      - rubay-sql-db
+  rubay-item-api:
+    container_name: rubay-item-api
+    image: rubay-item-api-2021:latest
+    build:
+      context: .
+      dockerfile: Rubay.Item.Api/Dockerfile
+    ports: 
+      - "6666:80"
+    links: 
+      - rubay-sql-db
+  rubay-sql-db:
+    container_name: rubay-sql-sb
+    image: mcr.microsoft.com/mssql/server
+    environment: 
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=12345678Aa!
+    ports: 
+      - "9090:1433"
