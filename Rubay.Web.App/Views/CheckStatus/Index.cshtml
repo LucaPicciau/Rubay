@@ -1,0 +1,28 @@
+﻿@model IEnumerable<Rubay.Web.App.Models.CheckStatusResult>
+
+@{
+    ViewData["Title"] = "CheckStatusController";
+}
+
+<h1>CheckStatusController</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.ApiName</td>
+                <td>@item.ApiUrl</td>
+                <td>@item.CheckResult</td>
+            </tr>
+        }
+    </tbody>
+</table>
