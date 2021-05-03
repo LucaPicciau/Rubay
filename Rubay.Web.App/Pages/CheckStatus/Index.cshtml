@@ -1,0 +1,29 @@
+﻿@page
+@model Rubay.Web.App.Pages.CheckStatusModel
+@{
+}
+
+
+@{
+    ViewData["Title"] = "CheckStatus";
+}
+
+<h1>CheckStatus</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Results)
+        {
+            <tr>
+                <td>@item.ApiName</td>
+                <td>@item.ApiUrl</td>
+                <td>@item.CheckResult</td>
+            </tr>
+        }
+    </tbody>
+</table>

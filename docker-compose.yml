@@ -11,7 +11,8 @@ services:
     links:
       - rubay-cart-api
       - rubay-item-api
-    environment: 
+      - rubay-sql-db
+    environment:
       - ItemApiUrl=http:\\rubay-item-api
       - CartApiUrl=http:\\rubay-cart-api
   rubay-cart-api:

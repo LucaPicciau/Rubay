@@ -5,9 +5,9 @@ VisualStudioVersion = 16.0.31205.134
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rubay.Web.App", "Rubay.Web.App\Rubay.Web.App.csproj", "{D5F6C42D-0375-438D-B368-A71C8D4CE793}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rubay.Item.Api", "Rubay.Item.Api\Rubay.Item.Api.csproj", "{9B77FFD4-BA50-4070-BD16-A2764FCD7CC5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rubay.Item.Api", "Rubay.Item.Api\Rubay.Item.Api.csproj", "{9B77FFD4-BA50-4070-BD16-A2764FCD7CC5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rubay.Cart.Api", "Rubay.Cart.Api\Rubay.Cart.Api.csproj", "{C8D6459E-D67F-4FF8-A2A8-AAE87B38FADB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rubay.Cart.Api", "Rubay.Cart.Api\Rubay.Cart.Api.csproj", "{C8D6459E-D67F-4FF8-A2A8-AAE87B38FADB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
