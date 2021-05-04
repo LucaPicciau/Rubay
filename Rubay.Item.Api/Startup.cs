@@ -6,6 +6,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Rubay.Sql.DataProvider.Database.Interfaces;
+using Rubay.Sql.DataProvider.Database.Models;
+using Rubay.Sql.DataProvider.Interfaces;
+using Rubay.Sql.DataProvider.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,6 +35,9 @@ namespace Rubay.Item.Api
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Rubay.Item.Api", Version = "v1" });
             });
+
+            services.AddSingleton<IProductSqlDataProvider>(new ProductSqlDataProvider(Configuration.GetConnectionString("AccountDbContextConnection")));
+            services.AddSingleton<IProductRepository, ProductRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

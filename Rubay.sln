@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rubay.Cart.Api", "Rubay.Car
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rubay.Web.App", "Rubay.Web.App\Rubay.Web.App.csproj", "{A165D9D6-E2E0-49CF-B8DF-1937A5C4A709}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rubay.Sql.DataProvider", "Rubay.Sql.DataProvider\Rubay.Sql.DataProvider.csproj", "{8EA3B81B-A81F-4402-8620-DF662951404B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{A165D9D6-E2E0-49CF-B8DF-1937A5C4A709}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A165D9D6-E2E0-49CF-B8DF-1937A5C4A709}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A165D9D6-E2E0-49CF-B8DF-1937A5C4A709}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8EA3B81B-A81F-4402-8620-DF662951404B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EA3B81B-A81F-4402-8620-DF662951404B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8EA3B81B-A81F-4402-8620-DF662951404B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8EA3B81B-A81F-4402-8620-DF662951404B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
