@@ -1,25 +1,31 @@
-﻿@model Rubay.Web.App.Controllers.CartView
+﻿@model Rubay.Web.App.Models.CartViewResult
 
 
 @{
     ViewData["Title"] = "CartAccount";
 }
 
-<h1>CheckStatusController</h1>
+<h1>My Cart: @Model.UserName</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <tbody>
-        @foreach (var item in Model.Products)
-        {
-            <tr>
-                <td>@item.ModelId</td>
-                <td>@item.ModelName</td>
-                <td>@item.Description</td>
-                <td>@item.Quantity</td>
-            </tr>
+        @{
+            if (Model.Products.Count > 0)
+                @foreach (var item in Model.Products)
+                {
+                    <tr>
+                        <td>@item.ModelId</td>
+                        <td>@item.ModelName</td>
+                        <td>@item.Description</td>
+                        <td>@item.Quantity</td>
+                    </tr>
+                }
+                else
+                {
+                    <tr>
+                        <td>Cart is Empty</td>
+                    </tr>
+                }
         }
     </tbody>
 </table>

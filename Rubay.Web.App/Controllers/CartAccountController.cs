@@ -1,58 +1,56 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Rubay.Web.App.Areas.Identity.Data;
+using Rubay.Web.App.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Text.Json.Serialization;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Rubay.Web.App.Controllers
 {
+    [Authorize]
     public class CartAccountController : Controller
     {
-        public IActionResult Index()
+        private readonly UserManager<AccountUser> _userManager;
+
+        public CartAccountController(UserManager<AccountUser> userManager) => _userManager = userManager;
+
+        public async Task<IActionResult> Index()
         {
+            var currentUser = this.User;
+            var user = await _userManager.GetUserAsync(currentUser);
+
             var cartApiUrl = Environment.GetEnvironmentVariable("CartApiUrl");
+            var response = new APIResponse<CartViewResult>($@"{cartApiUrl}/api/Cart/{user.Id}");
+            var cart = await response.ReturnObjectFromJsonAsync() ?? new CartViewResult();
 
-            var p = $@"http://localhost:5656/api/Cart/0ab8a68c-d8cb-4f21-b27f-8e08f4686a44";
+            cart.UserName = user.UserName;
 
-            var request = HttpWebRequest.Create(p);
-            var response = request.GetResponse();
-            var x = JsonConvert.DeserializeObject<CartView>(response.ContentType, new JsonSerializerSettings() { Formatting = Formatting.Indented });
-            return View(x);
+            return View(cart);
         }
     }
+}
 
 
-    public class APIResponse<T> where T : class
+public class APIResponse<T> where T : class
+{
+    public HttpStatusCode StatusCode { get; set; }
+    public string Url { get; set; }
+
+    public APIResponse(string apiUrl) => Url = apiUrl;
+
+    public async Task<T> ReturnObjectFromJsonAsync()
     {
-        public int StatusCode { get; set; }
-        public string ErrorMessage { get; set; }
-        public T ReturnObject { get; set; }
-    }
+        var client = new HttpClient();
 
-    public class ProductView
-    {
-        [JsonPropertyName("modelId")]
-        public string ModelId { get; set; }
+        var response = await client.GetAsync(Url);
 
-        [JsonPropertyName("modelName")]
-        public string ModelName { get; set; }
+        StatusCode = response.StatusCode;
 
-        [JsonPropertyName("quantity")]
-        public int Quantity { get; set; }
-
-        [JsonPropertyName("description")]
-        public string Description { get; set; }
-    }
-
-    public class CartView
-    {
-        [JsonPropertyName("userId")]
-        public string UserId { get; set; }
-
-        [JsonPropertyName("products")]
-        public List<ProductView> Products { get; set; }
+        return JsonConvert.DeserializeObject<T>(await response.Content.ReadAsStringAsync());
     }
 }

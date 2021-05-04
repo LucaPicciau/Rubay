@@ -14,9 +14,8 @@ namespace Rubay.Sql.DataProvider.Database.Models
         public CartAccount GetData(string id)
         {
             using var conn = new SqlConnection(_sqlDataConnection);
-            using var cmd = new SqlCommand(@$"SELECT ruc.UserId, ruc.ModelId, ruc.Quantity, ri.ModelName, rid.Description FROM RUBAY_UserCart ruc 
-                                             JOIN RUBAY_Item ri on ruc.ModelId = ri.ModelId 
-                                             JOIN RUBAY_ItemDescription rid on ri.ModelId = rid.ModelId 
+            using var cmd = new SqlCommand(@$"SELECT ruc.UserId, ruc.ModelId FROM RUBAY_UserCart ruc 
+                                             JOIN RUBAY_Item ri on ruc.ModelId = ri.ModelId
                                              WHERE ruc.UserId = '{id}' ", conn);
 
             conn.Open();
