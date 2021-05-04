@@ -11,6 +11,6 @@ namespace Rubay.Sql.DataProvider.Repositories
         public CartRepository(ICartDataProvider cartDataProvider) =>
             _cartDataProvider = cartDataProvider;
 
-        public Cart GetCart(string userId) => _cartDataProvider.GetData(userId);
+        public CartAccount GetCart(string userId) => _cartDataProvider.GetData(userId);
     }
 }

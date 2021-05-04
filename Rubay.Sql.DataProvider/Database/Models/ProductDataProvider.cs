@@ -36,7 +36,7 @@ namespace Rubay.Sql.DataProvider.Database.Models
             using var cmd = new SqlCommand($@"select ri.ModelId, ri.ModelName, ri.Quantity, rid.Description 
                                               from RUBAY_Item ri 
                                               join RUBAY_ItemDescription rid on ri.ModelId = rid.ModelId 
-                                              where ri.ModelId = {id}", conn);
+                                              where ri.ModelId = '{id}'", conn);
 
             conn.Open();
             using var reader = cmd.ExecuteReader();

@@ -1,0 +1,25 @@
+﻿@model Rubay.Web.App.Controllers.CartView
+
+
+@{
+    ViewData["Title"] = "CartAccount";
+}
+
+<h1>CheckStatusController</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <tbody>
+        @foreach (var item in Model.Products)
+        {
+            <tr>
+                <td>@item.ModelId</td>
+                <td>@item.ModelName</td>
+                <td>@item.Description</td>
+                <td>@item.Quantity</td>
+            </tr>
+        }
+    </tbody>
+</table>

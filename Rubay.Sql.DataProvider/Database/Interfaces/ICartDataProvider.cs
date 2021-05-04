@@ -2,7 +2,7 @@
 
 namespace Rubay.Sql.DataProvider.Database.Interfaces
 {
-    public interface ICartDataProvider : ISqlFind<Cart, string>
+    public interface ICartDataProvider : ISqlFind<CartAccount, string>
     {
     }
 }

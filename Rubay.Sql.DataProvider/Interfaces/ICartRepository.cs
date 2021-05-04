@@ -4,6 +4,6 @@ namespace Rubay.Sql.DataProvider.Interfaces
 {
     public interface ICartRepository
     {
-        public Cart GetCart(string userId);
+        public CartAccount GetCart(string userId);
     }
 }
