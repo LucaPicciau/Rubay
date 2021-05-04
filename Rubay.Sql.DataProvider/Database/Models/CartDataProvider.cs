@@ -1,6 +1,5 @@
 ﻿using Rubay.Sql.DataProvider.Database.Interfaces;
 using Rubay.Sql.DataProvider.Models;
-using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;

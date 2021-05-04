@@ -1,19 +1,13 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Rubay.Sql.DataProvider.Database.Interfaces;
 using Rubay.Sql.DataProvider.Database.Models;
 using Rubay.Sql.DataProvider.Interfaces;
 using Rubay.Sql.DataProvider.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Rubay.Cart.Api
 {

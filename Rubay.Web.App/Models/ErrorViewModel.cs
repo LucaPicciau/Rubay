@@ -1,5 +1,3 @@
-using System;
-
 namespace Rubay.Web.App.Models
 {
     public class ErrorViewModel
