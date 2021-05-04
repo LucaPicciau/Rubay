@@ -36,7 +36,7 @@ namespace Rubay.Item.Api
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Rubay.Item.Api", Version = "v1" });
             });
 
-            services.AddSingleton<IProductSqlDataProvider>(new ProductSqlDataProvider(Configuration.GetConnectionString("AccountDbContextConnection")));
+            services.AddSingleton<IProductDataProvider, ProductDataProvider>(_ => new ProductDataProvider(Configuration.GetConnectionString("AccountDbContextConnection")));
             services.AddSingleton<IProductRepository, ProductRepository>();
         }
 

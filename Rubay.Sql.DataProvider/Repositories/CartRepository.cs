@@ -6,11 +6,11 @@ namespace Rubay.Sql.DataProvider.Repositories
 {
     public class CartRepository : ICartRepository
     {
-        private readonly ICartSqlDataProvider _cartSqlDataProvider;
+        private readonly ICartDataProvider _cartDataProvider;
 
-        public CartRepository(ICartSqlDataProvider cartSqlDataProvider) =>
-            _cartSqlDataProvider = cartSqlDataProvider;
+        public CartRepository(ICartDataProvider cartDataProvider) =>
+            _cartDataProvider = cartDataProvider;
 
-        public Cart GetCart(string userId) => _cartSqlDataProvider.GetData(userId);
+        public Cart GetCart(string userId) => _cartDataProvider.GetData(userId);
     }
 }

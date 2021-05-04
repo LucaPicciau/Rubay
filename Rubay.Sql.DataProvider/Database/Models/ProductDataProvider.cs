@@ -6,9 +6,9 @@ using System.Data.SqlClient;
 
 namespace Rubay.Sql.DataProvider.Database.Models
 {
-    public class ProductSqlDataProvider : SqlDataProvider<Product>, IProductSqlDataProvider
+    public class ProductDataProvider : SqlDataProvider<Product>, IProductDataProvider
     {
-        public ProductSqlDataProvider(string sqlDataConnection) : base(sqlDataConnection) { }
+        public ProductDataProvider(string sqlDataConnection) : base(sqlDataConnection) { }
 
         public IEnumerable<Product> GetAll()
         {

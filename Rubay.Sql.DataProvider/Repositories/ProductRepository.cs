@@ -7,12 +7,12 @@ namespace Rubay.Sql.DataProvider.Repositories
 {
     public class ProductRepository : IProductRepository
     {
-        private readonly IProductSqlDataProvider _productSqlDataProvider;
+        private readonly IProductDataProvider _productDataProvider;
 
-        public ProductRepository(IProductSqlDataProvider productSqlDataProvider) =>
-            _productSqlDataProvider = productSqlDataProvider;
+        public ProductRepository(IProductDataProvider productDataProvider) =>
+            _productDataProvider = productDataProvider;
 
-        public Product GetProduct(string productId) => _productSqlDataProvider.GetData(productId);
-        public IEnumerable<Product> GetProducts() => _productSqlDataProvider.GetAll();
+        public Product GetProduct(string productId) => _productDataProvider.GetData(productId);
+        public IEnumerable<Product> GetProducts() => _productDataProvider.GetAll();
     }
 }

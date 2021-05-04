@@ -6,9 +6,9 @@ using System.Data.SqlClient;
 
 namespace Rubay.Sql.DataProvider.Database.Models
 {
-    public class CartSqlDataProvider : SqlDataProvider<Cart>, ICartSqlDataProvider
+    public class CartDataProvider : SqlDataProvider<Cart>, ICartDataProvider
     {
-        public CartSqlDataProvider(string sqlDataConnection) : base(sqlDataConnection) { }
+        public CartDataProvider(string sqlDataConnection) : base(sqlDataConnection) { }
 
         public Cart GetData(string id)
         {
