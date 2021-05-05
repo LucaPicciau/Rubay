@@ -3,6 +3,7 @@ using Rubay.Sql.DataProvider.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Threading.Tasks;
 
 namespace Rubay.Sql.DataProvider.Database.Models
 {
@@ -29,7 +30,7 @@ namespace Rubay.Sql.DataProvider.Database.Models
                 };
         }
 
-        public Product GetData(string id)
+        public async Task<Product> GetDataAsync(string id)
         {
             Console.WriteLine(_sqlDataConnection);
             using var conn = new SqlConnection(_sqlDataConnection);
@@ -38,10 +39,10 @@ namespace Rubay.Sql.DataProvider.Database.Models
                                               join RUBAY_ItemDescription rid on ri.ModelId = rid.ModelId 
                                               where ri.ModelId = '{id}'", conn);
 
-            conn.Open();
-            using var reader = cmd.ExecuteReader();
+            await conn.OpenAsync();
+            using var reader = await cmd.ExecuteReaderAsync();
 
-            if (reader.Read())
+            if (await reader.ReadAsync())
                 return new Product()
                 {
                     ModelId = reader["ModelId"].ToString(),

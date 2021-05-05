@@ -12,17 +12,16 @@ namespace Rubay.Web.App.Controllers
     public class CartAccountController : Controller
     {
         private readonly UserManager<AccountUser> _userManager;
+        private readonly IApiResponse _apiResponse;
 
-        public CartAccountController(UserManager<AccountUser> userManager) => _userManager = userManager;
+        public CartAccountController(UserManager<AccountUser> userManager, IApiResponse apiResponse) => 
+            (_userManager, _apiResponse) = (userManager, apiResponse);
 
         public async Task<IActionResult> Index()
         {
-            var currentUser = this.User;
-            var user = await _userManager.GetUserAsync(currentUser);
-
             var cartApiUrl = Environment.GetEnvironmentVariable("CartApiUrl");
-            var response = new APIResponse<CartViewResult>($@"{cartApiUrl}/api/Cart/{user.Id}");
-            var cart = await response.ReturnObjectFromJsonAsync() ?? new CartViewResult();
+            var user = await _userManager.GetUserAsync(User);
+            var cart = await _apiResponse.ReturnObjectFromJsonAsync<CartViewResult>($"{cartApiUrl}/api/cart/{user.Id}") ?? new CartViewResult();
 
             cart.UserName = user.UserName;
 

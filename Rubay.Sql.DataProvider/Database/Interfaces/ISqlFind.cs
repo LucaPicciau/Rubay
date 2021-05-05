@@ -1,7 +1,9 @@
-﻿namespace Rubay.Sql.DataProvider.Database.Interfaces
+﻿using System.Threading.Tasks;
+
+namespace Rubay.Sql.DataProvider.Database.Interfaces
 {
     public interface ISqlFind<T, T2>
     {
-        public T GetData(T2 id);
+        public Task<T> GetDataAsync(T2 id);
     }
 }

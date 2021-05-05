@@ -2,6 +2,7 @@
 using Rubay.Sql.DataProvider.Interfaces;
 using Rubay.Sql.DataProvider.Models;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Rubay.Item.Api.Controllers
 {
@@ -14,7 +15,7 @@ namespace Rubay.Item.Api.Controllers
         public ItemController(IProductRepository productRepository) => _productRepository = productRepository;
 
         [HttpGet("{id}")]
-        public ActionResult<Product> Get(string id) => _productRepository.GetProduct(id);
+        public async Task<ActionResult<Product>> Get(string id) => await _productRepository.GetProduct(id);
 
         [HttpGet]
         public IEnumerable<Product> GetAll() => _productRepository.GetProducts();

@@ -2,6 +2,7 @@
 using Rubay.Sql.DataProvider.Interfaces;
 using Rubay.Sql.DataProvider.Models;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Rubay.Sql.DataProvider.Repositories
 {
@@ -12,7 +13,7 @@ namespace Rubay.Sql.DataProvider.Repositories
         public ProductRepository(IProductDataProvider productDataProvider) =>
             _productDataProvider = productDataProvider;
 
-        public Product GetProduct(string productId) => _productDataProvider.GetData(productId);
+        public async Task<Product> GetProduct(string productId) => await _productDataProvider.GetDataAsync(productId);
         public IEnumerable<Product> GetProducts() => _productDataProvider.GetAll();
     }
 }

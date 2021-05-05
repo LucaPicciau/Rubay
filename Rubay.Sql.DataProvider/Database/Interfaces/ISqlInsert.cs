@@ -2,6 +2,6 @@
 {
     public interface ISqlInsert<T>
     {
-        public void Insert();
+        public void Insert(T obj);
     }
 }

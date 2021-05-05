@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Rubay.Web.App.Controllers;
 using Rubay.Web.App.Models;
+using System;
 
 namespace Rubay.Web.App
 {
@@ -20,7 +22,7 @@ namespace Rubay.Web.App
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddSingleton<ICheckApi, CheckApi>();
+            services.AddSingleton<IApiResponse, ApiResponse>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

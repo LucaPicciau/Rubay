@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Rubay.Sql.DataProvider.Interfaces;
 using Rubay.Sql.DataProvider.Models;
+using System.Threading.Tasks;
 
 namespace Rubay.Cart.Api.Controllers
 {
@@ -13,6 +14,9 @@ namespace Rubay.Cart.Api.Controllers
         public CartController(ICartRepository cartRepository) => _cartRepository = cartRepository;
 
         [HttpGet("{id}")]
-        public ActionResult<CartAccount> Get(string id) => _cartRepository.GetCart(id);
+        public async Task<ActionResult<CartAccount>> GetAsync(string id) => await _cartRepository.GetCartAsync(id);
+
+        [HttpPost("{productId}")]
+        public async Task PostAsync(Product product, string userId) => await _cartRepository.InsertToCartAsync(product, userId);
     }
 }
