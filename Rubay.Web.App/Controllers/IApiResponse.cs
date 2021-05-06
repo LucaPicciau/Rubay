@@ -1,18 +1,19 @@
-﻿using Newtonsoft.Json;
-using System.Net;
+﻿using System.Net;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
 
 namespace Rubay.Web.App.Controllers
 {
     public interface IApiResponse
     {
-        public async Task<WebResponse> GetWebResponse(string url)
+        public async Task<WebResponse> GetResponseAsync(string url, HttpMethod method)
         {
             try
             {
-                var request = (HttpWebRequest)WebRequest.Create(url);
-                return await request.GetResponseAsync();
+                var client = WebRequest.Create(url);
+                client.Method = method.Method;
+                return await client.GetResponseAsync();
             }
             catch(WebException ex)
             {
@@ -20,15 +21,19 @@ namespace Rubay.Web.App.Controllers
             }
         }
 
-        public async Task<HttpStatusCode> GetStatusCode(string url) =>  (await GetWebResponse(url) as HttpWebResponse).StatusCode;
+        public async Task<HttpStatusCode> GetStatusCode(string url) =>  (await GetResponseAsync(url, HttpMethod.Get) as HttpWebResponse).StatusCode;
 
-        public async Task<T> ReturnObjectFromJsonAsync<T>(string url) where T : class
+        public async Task<T> GetFromJsonAsync<T>(string url) where T : class
         {
-            using var client = new HttpClient();
-
-            var response = await client.GetAsync(url);
-
-            return JsonConvert.DeserializeObject<T>(await response.Content.ReadAsStringAsync());
+            try
+            {
+                using var client = new HttpClient();
+                return await client.GetFromJsonAsync<T>(url);
+            }
+            catch
+            {
+                return null;
+            }
         }
     }
 }

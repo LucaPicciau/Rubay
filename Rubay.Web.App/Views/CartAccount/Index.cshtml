@@ -18,6 +18,7 @@
                         <td>@item.ModelName</td>
                         <td>@item.Description</td>
                         <td>@item.Quantity</td>
+                        <td>@Html.ActionLink("Remove", "DeleteFromCart", "CartAccount", item)</td>
                     </tr>
                 }
                 else

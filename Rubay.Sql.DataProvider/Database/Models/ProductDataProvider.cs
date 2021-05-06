@@ -1,5 +1,5 @@
 ﻿using Rubay.Sql.DataProvider.Database.Interfaces;
-using Rubay.Sql.DataProvider.Models;
+using Rubay.Data.Common.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -32,7 +32,6 @@ namespace Rubay.Sql.DataProvider.Database.Models
 
         public async Task<Product> GetDataAsync(string id)
         {
-            Console.WriteLine(_sqlDataConnection);
             using var conn = new SqlConnection(_sqlDataConnection);
             using var cmd = new SqlCommand($@"select ri.ModelId, ri.ModelName, ri.Quantity, rid.Description 
                                               from RUBAY_Item ri 
@@ -52,6 +51,15 @@ namespace Rubay.Sql.DataProvider.Database.Models
                 };
 
             return null;
+        }
+
+        public async Task UpdateAsync(string productId, int quantity)
+        {
+            using var conn = new SqlConnection(_sqlDataConnection);
+            using var cmd = new SqlCommand(@$"UPDATE RUBAY_Item SET Quantity += {quantity} WHERE ModelId = '{productId}'", conn);
+
+            await conn.OpenAsync();
+            await cmd.ExecuteNonQueryAsync();
         }
     }
 }

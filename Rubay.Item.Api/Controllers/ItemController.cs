@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Rubay.Sql.DataProvider.Interfaces;
-using Rubay.Sql.DataProvider.Models;
+using Rubay.Data.Common.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -19,5 +19,8 @@ namespace Rubay.Item.Api.Controllers
 
         [HttpGet]
         public IEnumerable<Product> GetAll() => _productRepository.GetProducts();
+
+        [HttpPut("update/{productId}/{quantity}")]
+        public async Task Update(string productId, int quantity) => await _productRepository.UpdateProductAsync(productId, quantity);
     }
 }

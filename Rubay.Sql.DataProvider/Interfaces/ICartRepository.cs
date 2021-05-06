@@ -1,4 +1,4 @@
-﻿using Rubay.Sql.DataProvider.Models;
+﻿using Rubay.Data.Common.Models;
 using System.Threading.Tasks;
 
 namespace Rubay.Sql.DataProvider.Interfaces

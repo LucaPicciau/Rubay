@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Rubay.Data.Common\Rubay.Data.Common.csproj" />
     <ProjectReference Include="..\Rubay.Sql.DataProvider\Rubay.Sql.DataProvider.csproj" />
   </ItemGroup>
 

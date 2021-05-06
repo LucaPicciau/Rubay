@@ -4,6 +4,7 @@ using Rubay.Web.App.Models;
 using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Rubay.Controllers
@@ -18,8 +19,8 @@ namespace Rubay.Controllers
         {
             var itemApiUrl = Environment.GetEnvironmentVariable("ItemApiUrl");
             var cartApiUrl = Environment.GetEnvironmentVariable("CartApiUrl");
-            var responseItem = await _apiResponse.GetWebResponse($"{itemApiUrl}/api/KeepAlive");
-            var responseCart = await _apiResponse.GetWebResponse($"{cartApiUrl}/api/KeepAlive");
+            var responseItem = await _apiResponse.GetResponseAsync($"{itemApiUrl}/api/KeepAlive", HttpMethod.Get);
+            var responseCart = await _apiResponse.GetResponseAsync($"{cartApiUrl}/api/KeepAlive", HttpMethod.Get);
 
             var result = new List<CheckStatusResult> {
                 new CheckStatusResult("ItemApi",responseItem.ResponseUri.Host, (responseItem as HttpWebResponse).StatusCode == HttpStatusCode.OK),

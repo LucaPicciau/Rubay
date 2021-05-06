@@ -7,9 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rubay.Item.Api", "Rubay.Ite
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rubay.Cart.Api", "Rubay.Cart.Api\Rubay.Cart.Api.csproj", "{C8D6459E-D67F-4FF8-A2A8-AAE87B38FADB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rubay.Web.App", "Rubay.Web.App\Rubay.Web.App.csproj", "{A165D9D6-E2E0-49CF-B8DF-1937A5C4A709}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rubay.Web.App", "Rubay.Web.App\Rubay.Web.App.csproj", "{A165D9D6-E2E0-49CF-B8DF-1937A5C4A709}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rubay.Sql.DataProvider", "Rubay.Sql.DataProvider\Rubay.Sql.DataProvider.csproj", "{8EA3B81B-A81F-4402-8620-DF662951404B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rubay.Sql.DataProvider", "Rubay.Sql.DataProvider\Rubay.Sql.DataProvider.csproj", "{8EA3B81B-A81F-4402-8620-DF662951404B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rubay.Data.Common", "Rubay.Data.Common\Rubay.Data.Common.csproj", "{CF78D924-1803-4F82-A5BD-EFC0840E05DA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{8EA3B81B-A81F-4402-8620-DF662951404B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8EA3B81B-A81F-4402-8620-DF662951404B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8EA3B81B-A81F-4402-8620-DF662951404B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF78D924-1803-4F82-A5BD-EFC0840E05DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF78D924-1803-4F82-A5BD-EFC0840E05DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF78D924-1803-4F82-A5BD-EFC0840E05DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF78D924-1803-4F82-A5BD-EFC0840E05DA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

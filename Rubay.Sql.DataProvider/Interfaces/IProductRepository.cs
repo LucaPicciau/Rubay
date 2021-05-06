@@ -1,4 +1,4 @@
-﻿using Rubay.Sql.DataProvider.Models;
+﻿using Rubay.Data.Common.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -8,5 +8,6 @@ namespace Rubay.Sql.DataProvider.Interfaces
     {
         public Task<Product> GetProduct(string productId);
         public IEnumerable<Product> GetProducts();
+        public Task UpdateProductAsync(string productId, int quantity);
     }
 }

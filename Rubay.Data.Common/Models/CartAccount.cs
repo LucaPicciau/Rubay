@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Rubay.Sql.DataProvider.Models
+namespace Rubay.Data.Common.Models
 {
     public class CartAccount
     {
