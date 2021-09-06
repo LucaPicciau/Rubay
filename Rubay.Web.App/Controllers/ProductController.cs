@@ -6,7 +6,6 @@ using Rubay.Web.App.Areas.Identity.Data;
 using Rubay.Web.App.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 

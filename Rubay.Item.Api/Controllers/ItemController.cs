@@ -15,10 +15,10 @@ namespace Rubay.Item.Api.Controllers
         public ItemController(IProductRepository productRepository) => _productRepository = productRepository;
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Product>> Get(string id) => await _productRepository.GetProduct(id);
+        public async Task<ActionResult<Product>> Get(string id) => await _productRepository.GetProductAsync(id);
 
         [HttpGet]
-        public IEnumerable<Product> GetAll() => _productRepository.GetProducts();
+        public IEnumerable<Product> GetAll() => _productRepository.GetProductsAsync();
 
         [HttpPut("update/{productId}/{quantity}")]
         public async Task Update(string productId, int quantity) => await _productRepository.UpdateProductAsync(productId, quantity);

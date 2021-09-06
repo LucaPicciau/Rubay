@@ -4,8 +4,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Rubay.Web.App.Controllers;
-using Rubay.Web.App.Models;
-using System;
 
 namespace Rubay.Web.App
 {

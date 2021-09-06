@@ -3,7 +3,6 @@ using Rubay.Data.Common.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Rubay.Sql.DataProvider.Database.Models
@@ -14,8 +13,8 @@ namespace Rubay.Sql.DataProvider.Database.Models
 
         public async Task<CartAccount> GetDataAsync(string id)
         {
-            using var conn = new SqlConnection(_sqlDataConnection);
-            using var cmd = new SqlCommand(@$"SELECT ruc.UserId, ruc.ModelId, ruc.Quantity, rid.Description, ri.ModelName FROM RUBAY_UserCart ruc 
+            using SqlConnection conn = new(_sqlDataConnection);
+            using SqlCommand cmd = new(@$"SELECT ruc.UserId, ruc.ModelId, ruc.Quantity, rid.Description, ri.ModelName FROM RUBAY_UserCart ruc 
                                              JOIN RUBAY_Item ri on ruc.ModelId = ri.ModelId
 											 JOIN RUBAY_ItemDescription rid on ri.ModelId = rid.ModelId
                                              WHERE ruc.UserId = '{id}' ", conn);
@@ -23,24 +22,24 @@ namespace Rubay.Sql.DataProvider.Database.Models
             await conn.OpenAsync();
             using var reader = await cmd.ExecuteReaderAsync();
 
-            var products = new List<Product>();
-            var productDataProvider = new ProductDataProvider(_sqlDataConnection);
+            List<Product> products = new();
+            ProductDataProvider productDataProvider = new(_sqlDataConnection);
 
             while (await reader.ReadAsync())
-                products.Add(new Product() { 
+                products.Add(new() { 
                     ModelId = reader["ModelId"].ToString(), 
                     Description = reader["Description"].ToString(), 
                     ModelName = reader["ModelName"].ToString(), 
                     Quantity = Convert.ToInt32(reader["Quantity"].ToString())
                 });
 
-            return products.Count > 0 ? new CartAccount() { UserId = id, Products = products } : null;
+            return products.Count > 0 ? new() { UserId = id, Products = products } : null;
         }
 
         public async Task CheckInsertAsync(Product product, string userId)
         {
-            using var conn = new SqlConnection(_sqlDataConnection);
-            using var cmd = new SqlCommand(@$"SELECT ruc.UserId, ruc.ModelId, ruc.Quantity FROM [RUBAY_UserCart] ruc
+            using SqlConnection conn = new(_sqlDataConnection);
+            using SqlCommand cmd = new($@"SELECT ruc.UserId, ruc.ModelId, ruc.Quantity FROM [RUBAY_UserCart] ruc
                                               WHERE ruc.ModelId = '{product.ModelId}' AND ruc.UserId = '{userId}'", conn);
 
             await conn.OpenAsync();
@@ -54,8 +53,8 @@ namespace Rubay.Sql.DataProvider.Database.Models
 
         public async Task InsertAsync(Product product, string userId)
         {
-            using var conn = new SqlConnection(_sqlDataConnection);
-            using var cmd = new SqlCommand(@$"INSERT INTO RUBAY_UserCart (UserId, ModelId, Quantity) VALUES(@userId, @ModelId, @Quantity)", conn);
+            using SqlConnection conn = new(_sqlDataConnection);
+            using SqlCommand cmd = new($@"INSERT INTO RUBAY_UserCart (UserId, ModelId, Quantity) VALUES(@userId, @ModelId, @Quantity)", conn);
 
             await conn.OpenAsync();
 
@@ -68,8 +67,8 @@ namespace Rubay.Sql.DataProvider.Database.Models
 
         public async Task DeleteAsync(string productId, string userId)
         {
-            using var conn = new SqlConnection(_sqlDataConnection);
-            using var cmd = new SqlCommand(@$"DELETE FROM RUBAY_UserCart WHERE UserId = '{userId}' AND ModelId = '{productId}'", conn);
+            using SqlConnection conn = new(_sqlDataConnection);
+            using SqlCommand cmd = new($@"DELETE FROM RUBAY_UserCart WHERE UserId = '{userId}' AND ModelId = '{productId}'", conn);
 
             await conn.OpenAsync();
             await cmd.ExecuteNonQueryAsync();
@@ -77,8 +76,8 @@ namespace Rubay.Sql.DataProvider.Database.Models
 
         public async Task UpdateAsync(Product product, string userId)
         {
-            using var conn = new SqlConnection(_sqlDataConnection);
-            using var cmd = new SqlCommand(@$"UPDATE [RUBAY_UserCart] SET Quantity += {product.Quantity} WHERE ModelId = '{product.ModelId}' AND UserId = '{userId}'", conn);
+            using SqlConnection conn = new(_sqlDataConnection);
+            using SqlCommand cmd = new($@"UPDATE [RUBAY_UserCart] SET Quantity += {product.Quantity} WHERE ModelId = '{product.ModelId}' AND UserId = '{userId}'", conn);
 
             await conn.OpenAsync();
             await cmd.ExecuteNonQueryAsync();

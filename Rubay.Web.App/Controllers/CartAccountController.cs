@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Rubay.Data.Common.GeneralExtensions;
 using Rubay.Web.App.Areas.Identity.Data;
 using Rubay.Web.App.Models;
 using System;

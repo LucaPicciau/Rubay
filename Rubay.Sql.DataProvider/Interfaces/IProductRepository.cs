@@ -6,8 +6,8 @@ namespace Rubay.Sql.DataProvider.Interfaces
 {
     public interface IProductRepository
     {
-        public Task<Product> GetProduct(string productId);
-        public IEnumerable<Product> GetProducts();
+        public Task<Product> GetProductAsync(string productId);
+        public IEnumerable<Product> GetProductsAsync();
         public Task UpdateProductAsync(string productId, int quantity);
     }
 }
