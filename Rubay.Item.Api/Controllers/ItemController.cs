@@ -18,7 +18,7 @@ namespace Rubay.Item.Api.Controllers
         public async Task<ActionResult<Product>> Get(string id) => await _productRepository.GetProductAsync(id);
 
         [HttpGet]
-        public IEnumerable<Product> GetAll() => _productRepository.GetProductsAsync();
+        public async Task<IEnumerable<Product>> GetAllAsync() => await _productRepository.GetProductsAsync();
 
         [HttpPut("update/{productId}/{quantity}")]
         public async Task Update(string productId, int quantity) => await _productRepository.UpdateProductAsync(productId, quantity);

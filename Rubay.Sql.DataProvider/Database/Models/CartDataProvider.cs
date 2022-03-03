@@ -13,14 +13,14 @@ namespace Rubay.Sql.DataProvider.Database.Models
 
         public async Task<CartAccount> GetDataAsync(string id)
         {
-            using SqlConnection conn = new(_sqlDataConnection);
-            using SqlCommand cmd = new(@$"SELECT ruc.UserId, ruc.ModelId, ruc.Quantity, rid.Description, ri.ModelName FROM RUBAY_UserCart ruc 
+            await using SqlConnection conn = new(_sqlDataConnection);
+            await using SqlCommand cmd = new(@$"SELECT ruc.UserId, ruc.ModelId, ruc.Quantity, rid.Description, ri.ModelName FROM RUBAY_UserCart ruc 
                                              JOIN RUBAY_Item ri on ruc.ModelId = ri.ModelId
 											 JOIN RUBAY_ItemDescription rid on ri.ModelId = rid.ModelId
                                              WHERE ruc.UserId = '{id}' ", conn);
 
             await conn.OpenAsync();
-            using var reader = await cmd.ExecuteReaderAsync();
+            await using var reader = await cmd.ExecuteReaderAsync();
 
             List<Product> products = new();
             ProductDataProvider productDataProvider = new(_sqlDataConnection);
@@ -38,12 +38,12 @@ namespace Rubay.Sql.DataProvider.Database.Models
 
         public async Task CheckInsertAsync(Product product, string userId)
         {
-            using SqlConnection conn = new(_sqlDataConnection);
-            using SqlCommand cmd = new($@"SELECT ruc.UserId, ruc.ModelId, ruc.Quantity FROM [RUBAY_UserCart] ruc
+            await using SqlConnection conn = new(_sqlDataConnection);
+            await using SqlCommand cmd = new($@"SELECT ruc.UserId, ruc.ModelId, ruc.Quantity FROM [RUBAY_UserCart] ruc
                                               WHERE ruc.ModelId = '{product.ModelId}' AND ruc.UserId = '{userId}'", conn);
 
             await conn.OpenAsync();
-            using var reader = await cmd.ExecuteReaderAsync();
+            await using var reader = await cmd.ExecuteReaderAsync();
 
             if (await reader.ReadAsync())
                 await UpdateAsync(product, userId);
@@ -53,8 +53,8 @@ namespace Rubay.Sql.DataProvider.Database.Models
 
         public async Task InsertAsync(Product product, string userId)
         {
-            using SqlConnection conn = new(_sqlDataConnection);
-            using SqlCommand cmd = new($@"INSERT INTO RUBAY_UserCart (UserId, ModelId, Quantity) VALUES(@userId, @ModelId, @Quantity)", conn);
+            await using SqlConnection conn = new(_sqlDataConnection);
+            await using SqlCommand cmd = new($@"INSERT INTO RUBAY_UserCart (UserId, ModelId, Quantity) VALUES(@userId, @ModelId, @Quantity)", conn);
 
             await conn.OpenAsync();
 
@@ -67,8 +67,8 @@ namespace Rubay.Sql.DataProvider.Database.Models
 
         public async Task DeleteAsync(string productId, string userId)
         {
-            using SqlConnection conn = new(_sqlDataConnection);
-            using SqlCommand cmd = new($@"DELETE FROM RUBAY_UserCart WHERE UserId = '{userId}' AND ModelId = '{productId}'", conn);
+            await using SqlConnection conn = new(_sqlDataConnection);
+            await using SqlCommand cmd = new($@"DELETE FROM RUBAY_UserCart WHERE UserId = '{userId}' AND ModelId = '{productId}'", conn);
 
             await conn.OpenAsync();
             await cmd.ExecuteNonQueryAsync();
@@ -76,8 +76,8 @@ namespace Rubay.Sql.DataProvider.Database.Models
 
         public async Task UpdateAsync(Product product, string userId)
         {
-            using SqlConnection conn = new(_sqlDataConnection);
-            using SqlCommand cmd = new($@"UPDATE [RUBAY_UserCart] SET Quantity += {product.Quantity} WHERE ModelId = '{product.ModelId}' AND UserId = '{userId}'", conn);
+            await using SqlConnection conn = new(_sqlDataConnection);
+            await using SqlCommand cmd = new($@"UPDATE [RUBAY_UserCart] SET Quantity += {product.Quantity} WHERE ModelId = '{product.ModelId}' AND UserId = '{userId}'", conn);
 
             await conn.OpenAsync();
             await cmd.ExecuteNonQueryAsync();

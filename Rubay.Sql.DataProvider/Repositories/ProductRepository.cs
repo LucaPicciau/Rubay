@@ -11,7 +11,7 @@ namespace Rubay.Sql.DataProvider.Repositories
     {
         private readonly IProductDataProvider _productDataProvider;
         public ProductRepository(IProductDataProvider productDataProvider) => _productDataProvider = productDataProvider;
-        public IEnumerable<Product> GetProductsAsync() => _productDataProvider.GetAllAsync().ToEnumerable();
+        public async Task<IEnumerable<Product>> GetProductsAsync() => await _productDataProvider.GetAllAsync().ToListAsync();
         public async Task<Product> GetProductAsync(string productId) => await _productDataProvider.GetDataAsync(productId);
         public async Task UpdateProductAsync(string productId, int quantity) => await _productDataProvider.UpdateAsync(productId, quantity);
     }

@@ -11,6 +11,7 @@
     <tbody>
         @{
             if (Model.Products.Count > 0)
+            {
                 @foreach (var item in Model.Products)
                 {
                     <tr>
@@ -21,12 +22,13 @@
                         <td>@Html.ActionLink("Remove", "DeleteFromCart", "CartAccount", item)</td>
                     </tr>
                 }
-                else
-                {
-                    <tr>
-                        <td>Cart is Empty</td>
-                    </tr>
-                }
+            }
+            else
+            {
+                <tr>
+                    <td>Cart is Empty</td>
+                </tr>
+            }
         }
     </tbody>
 </table>

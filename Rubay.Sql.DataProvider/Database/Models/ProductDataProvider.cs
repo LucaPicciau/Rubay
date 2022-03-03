@@ -13,12 +13,12 @@ namespace Rubay.Sql.DataProvider.Database.Models
 
         public async IAsyncEnumerable<Product> GetAllAsync()
         {
-            using SqlConnection conn = new(_sqlDataConnection);
-            using SqlCommand cmd = new($@"select ri.ModelId, ri.ModelName, ri.Quantity, rid.Description from RUBAY_Item ri
+            await using SqlConnection conn = new(_sqlDataConnection);
+            await using SqlCommand cmd = new($@"select ri.ModelId, ri.ModelName, ri.Quantity, rid.Description from RUBAY_Item ri
                                               join RUBAY_ItemDescription rid on ri.ModelId = rid.ModelId", conn);
 
             await conn.OpenAsync();
-            using var reader = await cmd.ExecuteReaderAsync();
+            await using var reader = await cmd.ExecuteReaderAsync();
 
             while (await reader.ReadAsync())
                 yield return new()
@@ -32,14 +32,14 @@ namespace Rubay.Sql.DataProvider.Database.Models
 
         public async Task<Product> GetDataAsync(string id)
         {
-            using SqlConnection conn = new(_sqlDataConnection);
-            using SqlCommand cmd = new($@"select ri.ModelId, ri.ModelName, ri.Quantity, rid.Description 
+            await using SqlConnection conn = new(_sqlDataConnection);
+            await using SqlCommand cmd = new($@"select ri.ModelId, ri.ModelName, ri.Quantity, rid.Description 
                                               from RUBAY_Item ri 
                                               join RUBAY_ItemDescription rid on ri.ModelId = rid.ModelId 
                                               where ri.ModelId = '{id}'", conn);
 
             await conn.OpenAsync();
-            using var reader = await cmd.ExecuteReaderAsync();
+            await using var reader = await cmd.ExecuteReaderAsync();
 
             if (await reader.ReadAsync())
                 return new()
@@ -55,8 +55,8 @@ namespace Rubay.Sql.DataProvider.Database.Models
 
         public async Task UpdateAsync(string productId, int quantity)
         {
-            using SqlConnection conn = new(_sqlDataConnection);
-            using SqlCommand cmd = new($@"UPDATE RUBAY_Item SET Quantity += {quantity} WHERE ModelId = '{productId}'", conn);
+            await using SqlConnection conn = new(_sqlDataConnection);
+            await using SqlCommand cmd = new($@"UPDATE RUBAY_Item SET Quantity += {quantity} WHERE ModelId = '{productId}'", conn);
 
             await conn.OpenAsync();
             await cmd.ExecuteNonQueryAsync();
