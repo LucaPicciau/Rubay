@@ -1,11 +1,11 @@
-﻿using Rubay.Sql.DataProvider.Database.Interfaces;
-using Rubay.Data.Common.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
+using Rubay.Data.Common.Models;
+using Rubay.Sql.DataProvider.Database.Interfaces;
 
-namespace Rubay.Sql.DataProvider.Database.Models
+namespace Rubay.Sql.DataProvider.Database.Providers
 {
     public class ProductDataProvider : SqlDataProvider<Product>, IProductDataProvider
     {
@@ -13,8 +13,8 @@ namespace Rubay.Sql.DataProvider.Database.Models
 
         public async IAsyncEnumerable<Product> GetAllAsync()
         {
-            await using SqlConnection conn = new(_sqlDataConnection);
-            await using SqlCommand cmd = new($@"select ri.ModelId, ri.ModelName, ri.Quantity, rid.Description from RUBAY_Item ri
+            await using SqlConnection conn = new(SqlDataConnection);
+            await using SqlCommand cmd = new(@"select ri.ModelId, ri.ModelName, ri.Quantity, rid.Description from RUBAY_Item ri
                                               join RUBAY_ItemDescription rid on ri.ModelId = rid.ModelId", conn);
 
             await conn.OpenAsync();
@@ -32,13 +32,16 @@ namespace Rubay.Sql.DataProvider.Database.Models
 
         public async Task<Product> GetDataAsync(string id)
         {
-            await using SqlConnection conn = new(_sqlDataConnection);
-            await using SqlCommand cmd = new($@"select ri.ModelId, ri.ModelName, ri.Quantity, rid.Description 
+            await using SqlConnection conn = new(SqlDataConnection);
+            await using SqlCommand cmd = new(@"select ri.ModelId, ri.ModelName, ri.Quantity, rid.Description 
                                               from RUBAY_Item ri 
                                               join RUBAY_ItemDescription rid on ri.ModelId = rid.ModelId 
-                                              where ri.ModelId = '{id}'", conn);
+                                              where ri.ModelId = @id", conn);
 
             await conn.OpenAsync();
+
+            cmd.Parameters.AddWithValue("@id", id);
+
             await using var reader = await cmd.ExecuteReaderAsync();
 
             if (await reader.ReadAsync())
@@ -55,10 +58,14 @@ namespace Rubay.Sql.DataProvider.Database.Models
 
         public async Task UpdateAsync(string productId, int quantity)
         {
-            await using SqlConnection conn = new(_sqlDataConnection);
-            await using SqlCommand cmd = new($@"UPDATE RUBAY_Item SET Quantity += {quantity} WHERE ModelId = '{productId}'", conn);
+            await using SqlConnection conn = new(SqlDataConnection);
+            await using SqlCommand cmd = new(@"UPDATE RUBAY_Item SET Quantity += @quantity WHERE ModelId = @productId", conn);
 
             await conn.OpenAsync();
+
+            cmd.Parameters.AddWithValue("@quantity", quantity);
+            cmd.Parameters.AddWithValue("@productId", productId);
+
             await cmd.ExecuteNonQueryAsync();
         }
     }

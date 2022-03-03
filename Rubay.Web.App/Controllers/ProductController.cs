@@ -35,10 +35,10 @@ namespace Rubay.Web.App.Controllers
 
             var user = await _userManager.GetUserAsync(User);
 
-            productViewResult.Quantity = 1;
+            var newProduct = productViewResult with { Quantity = 1};
 
-            await _apiResponse.GetResponseAsync($"{cartApiUrl}/api/cart/{user.Id}/insert/{productViewResult.ToJson()}", HttpMethod.Post);
-            await _apiResponse.GetResponseAsync($"{itemApiUrl}/api/item/update/{productViewResult.ModelId}/{-productViewResult.Quantity}", HttpMethod.Put);
+            await _apiResponse.GetResponseAsync($"{cartApiUrl}/api/cart/{user.Id}/insert/{newProduct.ToJson()}", HttpMethod.Post);
+            await _apiResponse.GetResponseAsync($"{itemApiUrl}/api/item/update/{newProduct.ModelId}/{-newProduct.Quantity}", HttpMethod.Put);
 
             return RedirectToAction("Index");
         }

@@ -1,13 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Rubay.Web.App.Controllers;
-using Rubay.Web.App.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Rubay.Web.App.Models;
 
-namespace Rubay.Controllers
+namespace Rubay.Web.App.Controllers
 {
     public class CheckStatusController : Controller
     {
@@ -23,8 +22,8 @@ namespace Rubay.Controllers
             var responseCart = await _apiResponse.GetResponseAsync($"{cartApiUrl}/api/KeepAlive", HttpMethod.Get);
 
             var result = new List<CheckStatusResult> {
-                new CheckStatusResult("ItemApi",responseItem.ResponseUri.Host, (responseItem as HttpWebResponse).StatusCode == HttpStatusCode.OK),
-                new CheckStatusResult("CartApiUrl",responseCart.ResponseUri.Host,(responseCart as HttpWebResponse).StatusCode == HttpStatusCode.OK),
+                new CheckStatusResult("ItemApi",responseItem.RequestMessage.RequestUri.Host, responseItem.StatusCode == HttpStatusCode.OK),
+                new CheckStatusResult("CartApiUrl",responseCart.RequestMessage.RequestUri.Host,responseCart.StatusCode == HttpStatusCode.OK),
             };
 
             return View(result);

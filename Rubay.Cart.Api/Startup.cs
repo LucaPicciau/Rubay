@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Rubay.Sql.DataProvider.Database.Interfaces;
-using Rubay.Sql.DataProvider.Database.Models;
+using Rubay.Sql.DataProvider.Database.Providers;
 using Rubay.Sql.DataProvider.Interfaces;
 using Rubay.Sql.DataProvider.Repositories;
 
@@ -20,7 +20,6 @@ namespace Rubay.Cart.Api
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
 

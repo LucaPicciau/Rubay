@@ -1,9 +1,7 @@
 namespace Rubay.Web.App.Models
 {
-    public class ErrorViewModel
+    public record ErrorViewModel(string RequestId)
     {
-        public string RequestId { get; set; }
-
         public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
     }
 }

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Rubay.Web.App.Areas.Identity.Data;
 using Rubay.Web.App.Models;
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -22,9 +23,7 @@ namespace Rubay.Web.App.Controllers
         {
             var cartApiUrl = Environment.GetEnvironmentVariable("CartApiUrl");
             var user = await _userManager.GetUserAsync(User);
-            var cart = await _apiResponse.GetFromJsonAsync<CartViewResult>($"{cartApiUrl}/api/cart/{user.Id}") ?? new CartViewResult();
-
-            cart.UserName = user.UserName;
+            var cart = await _apiResponse.GetFromJsonAsync<CartViewResult>($"{cartApiUrl}/api/cart/{user.Id}") ?? new CartViewResult(user.UserName,new List<ProductViewResult>());
 
             return View(cart);
         }

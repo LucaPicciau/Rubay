@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Rubay.Web.App.Areas.Identity.Data;
 
-namespace Rubay.Web.App.Data
+namespace Rubay.Web.App.Areas.Identity.Data
 {
     public class AccountDbContext : IdentityDbContext<AccountUser>
     {

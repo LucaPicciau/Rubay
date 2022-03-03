@@ -9,10 +9,7 @@ namespace Rubay.Web.App.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
+        public HomeController(ILogger<HomeController> logger) => _logger = logger;
 
         public IActionResult Index()
         {
@@ -27,7 +24,8 @@ namespace Rubay.Web.App.Controllers
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            ErrorViewModel errorViewModel = new(Activity.Current?.Id ?? HttpContext.TraceIdentifier);
+            return View(errorViewModel);
         }
     }
 }

@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Rubay.Web.App.Areas.Identity.Data;
-using Rubay.Web.App.Data;
 
 [assembly: HostingStartup(typeof(Rubay.Web.App.Areas.Identity.IdentityHostingStartup))]
 namespace Rubay.Web.App.Areas.Identity
