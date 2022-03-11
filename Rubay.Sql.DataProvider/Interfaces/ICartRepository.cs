@@ -1,12 +1,10 @@
-﻿using Rubay.Data.Common.Models;
-using System.Threading.Tasks;
+﻿using Rubay.Data.Common;
 
-namespace Rubay.Sql.DataProvider.Interfaces
+namespace Rubay.Sql.DataProvider.Interfaces;
+
+public interface ICartRepository
 {
-    public interface ICartRepository
-    {
-        public Task<CartAccount> GetCartAsync(string userId);
-        public Task InsertToCartAsync(Product product, string userId);
-        public Task DeleteFromCartAsync(string productId, string userId);
-    }
+    public Task<CartAccount> GetCartAsync(string userId);
+    public Task InsertToCartAsync(Product product, string userId);
+    public Task DeleteFromCartAsync(string productId, string userId);
 }

@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Rubay.Cart.Api.Controllers
+namespace Rubay.Cart.Api.Controllers;
+
+[ApiController]
+[Route("/api/[controller]")]
+public class KeepAliveController : ControllerBase
 {
-    [ApiController]
-    [Route("/api/[controller]")]
-    public class KeepAliveController : ControllerBase
-    {
-        [HttpGet]
-        public bool Get() => true;
-    }
+    [HttpGet]
+    public bool Get() => true;
 }

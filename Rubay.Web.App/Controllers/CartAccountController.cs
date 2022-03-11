@@ -8,38 +8,36 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace Rubay.Web.App.Controllers
+namespace Rubay.Web.App.Controllers;
+
+[Authorize]
+public class CartAccountController : Controller
 {
-    [Authorize]
-    public class CartAccountController : Controller
+    private readonly UserManager<AccountUser> _userManager;
+    private readonly IApiResponse _apiResponse;
+
+    public CartAccountController(UserManager<AccountUser> userManager, IApiResponse apiResponse) => 
+        (_userManager, _apiResponse) = (userManager, apiResponse);
+
+    public async Task<IActionResult> Index()
     {
-        private readonly UserManager<AccountUser> _userManager;
-        private readonly IApiResponse _apiResponse;
+        var cartApiUrl = Environment.GetEnvironmentVariable("CartApiUrl");
+        var user = await _userManager.GetUserAsync(User);
+        var cart = await _apiResponse.GetFromJsonAsync<CartViewResult>($"{cartApiUrl}/api/cart/{user.Id}") ?? new CartViewResult(user.UserName,new List<ProductViewResult>());
 
-        public CartAccountController(UserManager<AccountUser> userManager, IApiResponse apiResponse) => 
-            (_userManager, _apiResponse) = (userManager, apiResponse);
+        return View(cart);
+    }
 
-        public async Task<IActionResult> Index()
-        {
-            var cartApiUrl = Environment.GetEnvironmentVariable("CartApiUrl");
-            var user = await _userManager.GetUserAsync(User);
-            var cart = await _apiResponse.GetFromJsonAsync<CartViewResult>($"{cartApiUrl}/api/cart/{user.Id}") ?? new CartViewResult(user.UserName,new List<ProductViewResult>());
+    public async Task<IActionResult> DeleteFromCart(ProductViewResult productViewResult)
+    {
+        var cartApiUrl = Environment.GetEnvironmentVariable("CartApiUrl");
+        var itemApiUrl = Environment.GetEnvironmentVariable("ItemApiUrl");
+        var user = await _userManager.GetUserAsync(User);
 
-            return View(cart);
-        }
-
-        public async Task<IActionResult> DeleteFromCart(ProductViewResult productViewResult)
-        {
-            var cartApiUrl = Environment.GetEnvironmentVariable("CartApiUrl");
-            var itemApiUrl = Environment.GetEnvironmentVariable("ItemApiUrl");
-            var user = await _userManager.GetUserAsync(User);
-
-            await _apiResponse.GetResponseAsync($"{cartApiUrl}/api/cart/{user.Id}/delete/{productViewResult.ModelId}", HttpMethod.Delete);
-            await _apiResponse.GetResponseAsync($"{itemApiUrl}/api/item/update/{productViewResult.ModelId}/{productViewResult.Quantity}", HttpMethod.Put);
+        await _apiResponse.GetResponseAsync($"{cartApiUrl}/api/cart/{user.Id}/delete/{productViewResult.ModelId}", HttpMethod.Delete);
+        await _apiResponse.GetResponseAsync($"{itemApiUrl}/api/item/update/{productViewResult.ModelId}/{productViewResult.Quantity}", HttpMethod.Put);
 
 
-            return RedirectToAction("Index");
-        }
+        return RedirectToAction("Index");
     }
 }
-

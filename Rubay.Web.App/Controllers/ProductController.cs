@@ -9,38 +9,37 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace Rubay.Web.App.Controllers
+namespace Rubay.Web.App.Controllers;
+
+public class ProductController : Controller
 {
-    public class ProductController : Controller
+    private readonly UserManager<AccountUser> _userManager;
+    private readonly IApiResponse _apiResponse;
+
+    public ProductController(UserManager<AccountUser> userManager, IApiResponse apiResponse) => 
+        (_userManager, _apiResponse) = (userManager, apiResponse);
+
+    public async Task<IActionResult> Index()
     {
-        private readonly UserManager<AccountUser> _userManager;
-        private readonly IApiResponse _apiResponse;
+        var itemApiUrl = Environment.GetEnvironmentVariable("ItemApiUrl");
+        var products = await _apiResponse.GetFromJsonAsync<IEnumerable<ProductViewResult>>($"{itemApiUrl}/api/item");
 
-        public ProductController(UserManager<AccountUser> userManager, IApiResponse apiResponse) => 
-            (_userManager, _apiResponse) = (userManager, apiResponse);
+        return View(products);
+    }
 
-        public async Task<IActionResult> Index()
-        {
-            var itemApiUrl = Environment.GetEnvironmentVariable("ItemApiUrl");
-            var products = await _apiResponse.GetFromJsonAsync<IEnumerable<ProductViewResult>>($"{itemApiUrl}/api/item");
+    [Authorize]
+    public async Task<IActionResult> InsertToCart(ProductViewResult productViewResult)
+    {
+        var cartApiUrl = Environment.GetEnvironmentVariable("CartApiUrl");
+        var itemApiUrl = Environment.GetEnvironmentVariable("ItemApiUrl");
 
-            return View(products);
-        }
+        var user = await _userManager.GetUserAsync(User);
 
-        [Authorize]
-        public async Task<IActionResult> InsertToCart(ProductViewResult productViewResult)
-        {
-            var cartApiUrl = Environment.GetEnvironmentVariable("CartApiUrl");
-            var itemApiUrl = Environment.GetEnvironmentVariable("ItemApiUrl");
+        var newProduct = productViewResult with { Quantity = 1};
 
-            var user = await _userManager.GetUserAsync(User);
+        await _apiResponse.GetResponseAsync($"{cartApiUrl}/api/cart/{user.Id}/insert/{newProduct.ToJson()}", HttpMethod.Post);
+        await _apiResponse.GetResponseAsync($"{itemApiUrl}/api/item/update/{newProduct.ModelId}/{-newProduct.Quantity}", HttpMethod.Put);
 
-            var newProduct = productViewResult with { Quantity = 1};
-
-            await _apiResponse.GetResponseAsync($"{cartApiUrl}/api/cart/{user.Id}/insert/{newProduct.ToJson()}", HttpMethod.Post);
-            await _apiResponse.GetResponseAsync($"{itemApiUrl}/api/item/update/{newProduct.ModelId}/{-newProduct.Quantity}", HttpMethod.Put);
-
-            return RedirectToAction("Index");
-        }
+        return RedirectToAction("Index");
     }
 }

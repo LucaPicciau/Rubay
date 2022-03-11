@@ -1,7 +1,6 @@
-namespace Rubay.Web.App.Models
+namespace Rubay.Web.App.Models;
+
+public record ErrorViewModel(string RequestId)
 {
-    public record ErrorViewModel(string RequestId)
-    {
-        public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
-    }
+    public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
 }

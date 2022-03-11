@@ -1,6 +1,5 @@
-﻿namespace Rubay.Web.App.Controllers
+﻿namespace Rubay.Web.App.Controllers;
+
+public class ApiResponse : IApiResponse
 {
-    public class ApiResponse : IApiResponse
-    {
-    }
 }
