@@ -1,19 +1,33 @@
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
+using Rubay.Sql.DataProvider.Database;
+using Rubay.Sql.DataProvider.Interfaces;
+using Rubay.Sql.DataProvider.Repositories;
 
-namespace Rubay.Cart.Api;
+var builder = WebApplication.CreateBuilder(args);
 
-public class Program
+builder.Services.AddControllers();
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+builder.Services.AddSingleton<ICartDataProvider, CartDataProvider>(_ => new CartDataProvider(builder.Configuration.GetConnectionString("AccountDbContextConnection")));
+builder.Services.AddSingleton<ICartRepository, CartRepository>();
+
+builder.Services.AddSwaggerGen(c =>
 {
-    public static void Main(string[] args)
-    {
-        CreateHostBuilder(args).Build().Run();
-    }
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Rubay.Cart.Api", Version = "v1" });
+});
 
-    public static IHostBuilder CreateHostBuilder(string[] args) =>
-        Host.CreateDefaultBuilder(args)
-            .ConfigureWebHostDefaults(webBuilder =>
-            {
-                webBuilder.UseStartup<Startup>();
-            });
+var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
+
+app.UseAuthorization();
+
+app.MapControllers();
+
+app.Run();

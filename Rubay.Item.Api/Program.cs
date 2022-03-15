@@ -1,16 +1,33 @@
-namespace Rubay.Item.Api;
+using Microsoft.OpenApi.Models;
+using Rubay.Sql.DataProvider.Database;
+using Rubay.Sql.DataProvider.Interfaces;
+using Rubay.Sql.DataProvider.Repositories;
 
-public class Program
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddControllers();
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+builder.Services.AddSingleton<IProductDataProvider, ProductDataProvider>(_ => new ProductDataProvider(builder.Configuration.GetConnectionString("AccountDbContextConnection")));
+builder.Services.AddSingleton<IProductRepository, ProductRepository>();
+
+builder.Services.AddSwaggerGen(c =>
 {
-    public static void Main(string[] args)
-    {
-        CreateHostBuilder(args).Build().Run();
-    }
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Rubay.Item.Api", Version = "v1" });
+});
 
-    public static IHostBuilder CreateHostBuilder(string[] args) =>
-        Host.CreateDefaultBuilder(args)
-            .ConfigureWebHostDefaults(webBuilder =>
-            {
-                webBuilder.UseStartup<Startup>();
-            });
+var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
+
+app.UseAuthorization();
+
+app.MapControllers();
+
+app.Run();

@@ -3,10 +3,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Rubay.Web.App.Areas.Identity.Data;
 using Rubay.Web.App.Models;
-using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Threading.Tasks;
 
 namespace Rubay.Web.App.Controllers;
 
