@@ -1,23 +1,22 @@
 ﻿using System.Data.SqlClient;
 using Dapper;
-using Rubay.Sql.DataProvider.Interfaces;
 
 namespace Rubay.Sql.DataProvider.Database;
 
-public abstract class SqlDataProvider<T> : ISqlDataProvider<T>
+public abstract class SqlDataProvider
 {
-    protected readonly string SqlDataConnection;
-    protected SqlDataProvider(string sqlDataConnection) => SqlDataConnection = sqlDataConnection;
+    private readonly string _sqlDataConnection;
+    protected SqlDataProvider(string sqlDataConnection) => _sqlDataConnection = sqlDataConnection;
 
-    protected async Task<IEnumerable<TOutput>> ExecuteAsync<TOutput>(string connString, object input = null)
+    protected async Task<IEnumerable<T>> ExecuteAsync<T>(string query, object input = null)
     {
-        await using SqlConnection conn = new(SqlDataConnection);
-        return await conn.QueryAsync<TOutput>(connString, input);
+        await using SqlConnection conn = new(_sqlDataConnection);
+        return await conn.QueryAsync<T>(query, input);
     }
 
-    protected async Task ExecuteAsync(string connString, object input = null)
+    protected async Task ExecuteAsync(string query, object input = null)
     {
-        await using SqlConnection conn = new(SqlDataConnection);
-        await conn.QueryAsync(connString, input);
+        await using SqlConnection conn = new(_sqlDataConnection);
+        await conn.QueryAsync(query, input);
     }
 }

@@ -3,7 +3,7 @@ using Rubay.Sql.DataProvider.Interfaces;
 
 namespace Rubay.Sql.DataProvider.Database;
 
-public class ProductDataProvider : SqlDataProvider<Product>, IProductDataProvider
+public class ProductDataProvider : SqlDataProvider, IProductDataProvider
 {
     public ProductDataProvider(string sqlDataConnection) : base(sqlDataConnection) { }
 

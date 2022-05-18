@@ -3,7 +3,7 @@ using Rubay.Sql.DataProvider.Interfaces;
 
 namespace Rubay.Sql.DataProvider.Database;
 
-public class CartDataProvider : SqlDataProvider<CartAccount>, ICartDataProvider
+public class CartDataProvider : SqlDataProvider, ICartDataProvider
 {
     public CartDataProvider(string sqlDataConnection) : base(sqlDataConnection) { }
 
@@ -36,19 +36,19 @@ public class CartDataProvider : SqlDataProvider<CartAccount>, ICartDataProvider
 
     public async Task InsertAsync(Product product, string userId)
     {
-        const string connString = @"INSERT INTO RUBAY_UserCart (UserId, ModelId, Quantity) VALUES(@userId, @ModelId, @Quantity)";
-        await ExecuteAsync(connString, new { product.ModelId, userId, product.Quantity });
+        const string query = @"INSERT INTO RUBAY_UserCart (UserId, ModelId, Quantity) VALUES(@userId, @ModelId, @Quantity)";
+        await ExecuteAsync(query, new { product.ModelId, userId, product.Quantity });
     }
 
     public async Task DeleteAsync(string productId, string userId)
     {
-        const string connString = @"DELETE FROM RUBAY_UserCart WHERE UserId = @UserId AND ModelId = @productId";
-        await ExecuteAsync(connString, new { UserId = userId, productId });
+        const string query = @"DELETE FROM RUBAY_UserCart WHERE UserId = @UserId AND ModelId = @productId";
+        await ExecuteAsync(query, new { UserId = userId, productId });
     }
 
     public async Task UpdateAsync(Product product, string userId)
     {
-        const string connString = @"UPDATE [RUBAY_UserCart] SET Quantity += @Quantity WHERE ModelId = @ModelId AND UserId = @UserId";
-        await ExecuteAsync(connString, new { UserId = userId, product.Quantity, product.ModelId });
+        const string query = @"UPDATE [RUBAY_UserCart] SET Quantity += @Quantity WHERE ModelId = @ModelId AND UserId = @UserId";
+        await ExecuteAsync(query, new { UserId = userId, product.Quantity, product.ModelId });
     }
 }
